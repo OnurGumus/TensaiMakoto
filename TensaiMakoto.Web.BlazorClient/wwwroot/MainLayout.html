@@ -2,23 +2,47 @@
     <img class="logo" src="_content/TensaiMakoto.Web.BlazorClient/img/tensaimakoto.png" />
 </div>
 <style>
- .content{
-     font-size:3em;
- }
-     .arrow{
-         height:2em;
-       filter: invert(15%) sepia(98%) saturate(7464%) hue-rotate(359deg) brightness(100%) contrast(110%);
+    .content {
+        font-size: 3em;
     }
-     .flip{
-       transform: scale(-1,1);
+
+    .arrow {
+        height: 2em;
+        filter: invert(15%) sepia(98%) saturate(7464%) hue-rotate(359deg) brightness(100%) contrast(110%);
+    }
+
+    .flip {
+        transform: scale(-1,1);
+    }
+
+    .flip2x {
+        transform: scale(-2,2);
+    }
+    .scale2x {
+        transform: scale(2,2);
+    }
+
+    .fill {
+        min-height: 100%;
+        height: 100%;
     }
 </style>
 
-<div class="content">
-    <img src="_content/TensaiMakoto.Web.BlazorClient/img/right_arrow.svg" onclick="${OnLeftClick}"class="arrow flip" />
-    <div class="content">
-        ${Body}
-    </div>
-    <img src="_content/TensaiMakoto.Web.BlazorClient/img/right_arrow.svg" onclick="${OnRightClick}"class="arrow" />
+<div class="container fill">
+    <div class="row fill align-items-center justify-content-center">
+        <img
+             src="_content/TensaiMakoto.Web.BlazorClient/img/right_arrow.svg"
+             onclick="${OnLeftClick}"
+             class="arrow  flip2x  col" />
 
+        <div class="col d-flex justify-content-center ">
+            ${Body}
+        </div>
+
+        <img
+             src="_content/TensaiMakoto.Web.BlazorClient/img/right_arrow.svg"
+             onclick="${OnRightClick}"
+             class="arrow col scale2x" />
+
+    </div>
 </div>
