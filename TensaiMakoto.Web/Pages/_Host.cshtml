@@ -1,4 +1,4 @@
-﻿@page "/{id}."
+﻿@page "/{id}"
 @namespace TensaiMakoto.Web
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @using TensaiMakoto.Web.BlazorClient
@@ -33,21 +33,24 @@
         @functions{
             public bool IsInstructorTrial { get; set;}
             public bool IsInstructor { get; set;}
+            public string Route { get;set;}
+            private void CheckIsInstructorTrial() => IsInstructorTrial = "Makoto".Equals(RouteData.Values["id"]);
+
+
             public void OnGet()
             {
-                IsInstructorTrial = "Makoto".Equals(RouteData.Values["id"]);
+                CheckIsInstructorTrial();
             }
-            public void OnPost()
-            {
-            }
+
             public void OnPostView(string password)
             {
+                CheckIsInstructorTrial();
+
                 if (IsInstructorTrial && password == "m@k0t0")
                 {
                     IsInstructorTrial = false;
                     IsInstructor = true;
                 }
-
             }
         }
     }
@@ -57,17 +60,17 @@
         {
             <div class="col-lg-1">
                 <form asp-page-handler="view" method="post">
-                    <input type="text" name="password" />
+                    <input type="password" name="password" />
                     <button class="btn btn-default">Submit Password</button>
                 </form>
             </div>
         }
         else
         {
+            <h2>@IsInstructor</h2>
             <app>
-                <component type="typeof(Main.MyApp)" render-mode="Server" param-InstructorMode="@IsInstructor"></component>
+                <component type="typeof(Main.MyApp)" render-mode="Server" param-InstructorMode="@(IsInstructor)"></component>
             </app>
-
          }
     }
     <!-- comment below two lines for WASM -->
