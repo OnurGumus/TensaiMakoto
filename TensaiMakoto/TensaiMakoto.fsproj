@@ -10,6 +10,7 @@
     <Compile Include="Common.fs" />
     <Compile Include="Domain.fs" />
     <Compile Include="Projection.fs" />
+    <Compile Include="SlideService.fs" />
     <Compile Include="OrderService.fs" />
     <Compile Include="Extensions.fs" />
     <Compile Include="Main.fs" />

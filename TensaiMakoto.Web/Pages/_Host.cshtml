@@ -30,50 +30,58 @@
         };
     </script>
     @{
-        @functions{
-            public bool IsInstructorTrial { get; set;}
-            public bool IsInstructor { get; set;}
-            public string Route { get;set;}
-            private void CheckIsInstructorTrial() => IsInstructorTrial = "Makoto".Equals(RouteData.Values["id"]);
+    @functions{
+    public bool IsInstructorTrial { get; set;}
+    public bool IsInstructor { get; set;}
+    public string Route { get;set;}
+    private void CheckIsInstructorTrial() => IsInstructorTrial = "Makoto".Equals(RouteData.Values["id"]);
 
 
-            public void OnGet()
-            {
-                CheckIsInstructorTrial();
-            }
+    public void OnGet()
+    {
+    CheckIsInstructorTrial();
+    }
 
-            public void OnPostView(string password)
-            {
-                CheckIsInstructorTrial();
+    public void OnPostView(string password)
+    {
+    CheckIsInstructorTrial();
 
-                if (IsInstructorTrial && password == "m@k0t0")
-                {
-                    IsInstructorTrial = false;
-                    IsInstructor = true;
-                }
-            }
-        }
+    if (IsInstructorTrial && password == "m@k0t0")
+    {
+    IsInstructorTrial = false;
+    IsInstructor = true;
+    }
+    }
+    }
     }
 
     @{
-        if(IsInstructorTrial)
-        {
-            <div class="col-lg-1">
+    if(IsInstructorTrial)
+    {
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-6">
                 <form asp-page-handler="view" method="post">
-                    <input type="password" name="password" />
-                    <button class="btn btn-default">Submit Password</button>
+                    <div class="form-group">
+                        <label class="col-form-label" for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                    </div>
+                    <button class="btn btn-primary">Submit</button>
                 </form>
             </div>
-        }
-        else
-        {
-            <app>
-                <component type="typeof(Main.MyApp)" render-mode="Server" param-InstructorMode="@(IsInstructor)"></component>
-            </app>
-         }
+        </div>
+    </div>
+    }
+    else
+    {
+    <app>
+        <component type="typeof(Main.MyApp)" render-mode="Server" param-InstructorMode="@(IsInstructor)"></component>
+    </app>
+    }
     }
     <!-- comment below two lines for WASM -->
-    <script type="text/javascript" src="blazor.polyfill.min.js"></script>
+
     <script src="_framework/blazor.server.js"></script>
     <!-- uncomment below line for WASM -->
     <!--<script src="_framework/blazor.webassembly.js"></script>-->

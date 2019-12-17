@@ -14,10 +14,12 @@ open System.Collections.Concurrent
 
 let mutable currentSlide = 1
 
+
 type Model = {
     IsInstructor : bool
     CurrentSlide : int
     IsSync : bool
+    Slides : Slide list
 }
 
 and Message=
@@ -25,25 +27,27 @@ and Message=
     | SlideDecreaseRequested
     | SlideDecreased
     | SlideIncreased
+    | Nop
     | SlidePushed
+    | SlidesLoaded of Slide list
+
+let loadSlidesCmd remote categoryName =
+    Cmd.ofAsync remote.getSlides categoryName SlidesLoaded raise
 
 let dispatchers  = ConcurrentDictionary<(Message -> unit),unit>()
 
 
-let init isInstructor =
+let init isInstructor remote =
     {
         IsInstructor = isInstructor
         CurrentSlide = currentSlide
         IsSync = true
-    }, Cmd.none
+        Slides = []
+    }, loadSlidesCmd remote "Default"
 
 
 
-let update remote jsRuntime message model =
-    let genericUpdate update subModel msg  msgFn pageFn =
-        let subModel, cmd = update  msg subModel
-        model, Cmd.map msgFn cmd
-
+let update message model =
 
     match message, model with
     | SlideIncreaseRequested , _->
@@ -66,6 +70,10 @@ let update remote jsRuntime message model =
 
     | SlidePushed, _ ->
         {model with CurrentSlide = currentSlide}, Cmd.none
+    | SlidesLoaded slides , _ ->
+        {model with Slides = slides}, Cmd.none
+    | Nop,_ -> model, Cmd.none
+
 
 open Bolero.Html
 open BoleroHelpers
@@ -75,12 +83,26 @@ type MainLayout = Template<"wwwroot\MainLayout.html">
 
 let view  (js: IJSRuntime) ( model : Model) dispatch =
 
-    let content = text <| model.CurrentSlide.ToString()
+    let content =
+        match model.Slides with
+        | [] -> empty
+        | _ ->
+        let text =
+            (model.Slides.Item (model.CurrentSlide - 1)).Data
+            |> function SlideData.Text t -> t
+            |> text
+        h1[attr.style "font-size:10em"][text]
+
     let leftClick, rightClick =
         if model.IsInstructor then
             SlideDecreaseRequested, SlideIncreaseRequested
         else
             SlideDecreased, SlideIncreased
+
+    let leftClick =
+        if model.CurrentSlide = 1 then Nop else leftClick
+    let rightClick =
+        if model.CurrentSlide = model.Slides.Length then Nop else rightClick
 
 
     MainLayout()
@@ -122,9 +144,9 @@ type MyApp() =
          }|> Async.StartImmediateAsTask :> _
 
     override this.Program =
-        let remote = this.Remote<PizzaService>()
-        let update = update remote (this.JSRuntime)
-        Program.mkProgram (fun _ -> init this.InstructorMode) (update) (view this.JSRuntime)
+        let remote = this.Remote<SlideService>()
+        let update = update
+        Program.mkProgram (fun _ -> init this.InstructorMode remote) update (view this.JSRuntime)
 #if DEBUG
         |> Program.withTrace(fun msg model -> System.Console.WriteLine(msg : Message))
         |> Program.withConsoleTrace

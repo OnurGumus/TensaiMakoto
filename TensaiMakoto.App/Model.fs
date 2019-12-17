@@ -5,6 +5,13 @@ open System.Linq
 open System
 open Newtonsoft.Json
 
+type SlideData = Text of string
+
+[<CLIMutable>]
+type Slide = { Number : int; Data : SlideData }
+
+[<CLIMutable>]
+type SlideCategory = { Name : string ; Slides: Slide list }
 
 /// <summary>
 /// Represents a pre-configured template for a pizza a user can order

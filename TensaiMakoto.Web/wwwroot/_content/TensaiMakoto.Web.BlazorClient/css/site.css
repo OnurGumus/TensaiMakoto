@@ -1,5 +1,4 @@
-﻿@import url('font/quicksand.css');
-
+﻿
 body, html {
     height: 100%;
 }
@@ -39,7 +38,7 @@ form {
     margin-right: 3rem;
     width: 9rem;
 }
-
+/*
 .content {
     display: flex;
     height: 100%;
@@ -733,4 +732,4 @@ input[type=range] {
     100% {
         transform: translateX(500px);
     }
-}
+}*/

@@ -5,16 +5,9 @@ open TensaiMakoto.App.Model
 open Common
 open System
 
-type public PizzaService =
+type public SlideService =
     {
-        getSpecials : unit -> Async<PizzaSpecial list>
-        getToppings : unit -> Async<Topping list>
-        getOrders : string -> Async<Order list>
-        getOrderWithStatuses : string -> Async<OrderWithStatus list>
-        getOrderWithStatus : string * string -> Async<OrderWithStatus option>
-        placeOrder : string * Order -> Async<Result<string,string>>
-        signIn : string * string -> Async<Result<Authentication,string>>
-        renewToken : string -> Async<Result<Authentication,string>>
+        getSlides : string -> Async<Slide list>
     }
     interface IRemoteService with
-        member __.BasePath = "/pizzas"
+        member __.BasePath = "/slides"

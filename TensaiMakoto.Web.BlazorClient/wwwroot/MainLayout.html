@@ -18,6 +18,7 @@
     .flip2x {
         transform: scale(-2,2);
     }
+
     .scale2x {
         transform: scale(2,2);
     }
@@ -30,19 +31,19 @@
 
 <div class="container fill">
     <div class="row fill align-items-center justify-content-center">
-        <img
-             src="_content/TensaiMakoto.Web.BlazorClient/img/right_arrow.svg"
-             onclick="${OnLeftClick}"
-             class="arrow  flip2x  col" />
-
+        <div class="col d-flex  justify-content-center">
+            <img src="_content/TensaiMakoto.Web.BlazorClient/img/right_arrow.svg"
+                 onclick="${OnLeftClick}"
+                 class="arrow flip2x" />
+        </div>
         <div class="col d-flex justify-content-center ">
             ${Body}
         </div>
+        <div class="col d-flex justify-content-center">
+            <img src="_content/TensaiMakoto.Web.BlazorClient/img/right_arrow.svg"
+                 onclick="${OnRightClick}"
+                 class="arrow scale2x" />
 
-        <img
-             src="_content/TensaiMakoto.Web.BlazorClient/img/right_arrow.svg"
-             onclick="${OnRightClick}"
-             class="arrow col scale2x" />
-
+        </div>
     </div>
 </div>

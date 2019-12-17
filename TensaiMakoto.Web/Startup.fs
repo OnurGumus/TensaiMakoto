@@ -18,7 +18,7 @@ type Startup() =
         #if DEBUG
             .AddHotReload(templateDir = "../TensaiMakoto.Web.BlazorClient")
         #endif
-            .AddRemoting<Services.PizzaService>()
+            .AddRemoting<Services.SlideService>()
             .AddEF("Data Source=pizza.db")
             .SetupServices()
             .AddMvc()
