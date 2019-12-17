@@ -1,0 +1,80 @@
+﻿@page "/{id}."
+@namespace TensaiMakoto.Web
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using TensaiMakoto.Web.BlazorClient
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TensaiMakoto</title>
+    <base href="~/" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="_content/TensaiMakoto.Web.BlazorClient/css/site.css" rel="stylesheet" />
+</head>
+<body>
+    <script>
+        window.generalFunctions = {
+            onkeyUp: function (event) {
+                if (event.key == "Escape") document.getElementById("cancelButton").click();
+                else if (event.key == "Enter") document.getElementById("confirmButton").click();
+            },
+            registerForOnKeyUp: function () {
+                document.addEventListener("keyup", this.onkeyUp)
+            },
+            removeOnKeyUp: function () {
+                document.removeEventListener("keyup", this.onkeyUp);
+            }
+
+        };
+    </script>
+    @{
+        @functions{
+            public bool IsInstructorTrial { get; set;}
+            public bool IsInstructor { get; set;}
+            public void OnGet()
+            {
+                IsInstructorTrial = "Makoto".Equals(RouteData.Values["id"]);
+            }
+            public void OnPost()
+            {
+            }
+            public void OnPostView(string password)
+            {
+                if (IsInstructorTrial && password == "m@k0t0")
+                {
+                    IsInstructorTrial = false;
+                    IsInstructor = true;
+                }
+
+            }
+        }
+    }
+
+    @{
+        if(IsInstructorTrial)
+        {
+            <div class="col-lg-1">
+                <form asp-page-handler="view" method="post">
+                    <input type="text" name="password" />
+                    <button class="btn btn-default">Submit Password</button>
+                </form>
+            </div>
+        }
+        else
+        {
+            <app>
+                <component type="typeof(Main.MyApp)" render-mode="Server" param-InstructorMode="@IsInstructor"></component>
+            </app>
+
+         }
+    }
+    <!-- comment below two lines for WASM -->
+    <script type="text/javascript" src="blazor.polyfill.min.js"></script>
+    <script src="_framework/blazor.server.js"></script>
+    <!-- uncomment below line for WASM -->
+    <!--<script src="_framework/blazor.webassembly.js"></script>-->
+
+</body>
+</html>

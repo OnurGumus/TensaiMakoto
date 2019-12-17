@@ -1,0 +1,5 @@
+FSharp.Core
+System.Threading.Tasks
+System.Threading.Tasks.Extensions
+TaskBuilder.fs
+Newtonsoft.Json

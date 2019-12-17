@@ -1,0 +1,13 @@
+FSharp.Core
+TaskBuilder.fs
+Microsoft.Extensions.DependencyInjection
+Akka.Cluster.Sharding
+Akkling
+Akka.Persistence.Sqlite
+Akkling.Persistence
+Akkling.Cluster.Sharding
+Akka.Persistence.Query.Sql
+SQLProvider
+SQLitePCLRaw.core
+System.Data.SQLite.Core
+Akka.Cluster.Tools

@@ -1,0 +1,32 @@
+source https://api.nuget.org/v3/index.json
+storage:none
+framework:auto-detect
+nuget FSharp.Core
+nuget System.Collections.Immutable
+nuget Microsoft.EntityFrameworkCore prerelease
+nuget System.Threading.Tasks
+nuget TaskBuilder.fs
+nuget Microsoft.EntityFrameworkCore.Sqlite prerelease
+nuget Bolero 0.9.3-preview9
+nuget Bolero.Server 0.9.3-preview9
+nuget Bolero.HotReload.Server 0.9.3-preview9
+nuget Bolero.HotReload 0.9.3-preview9
+nuget Bolero.Build  0.9.3-preview9
+nuget Microsoft.AspNetCore.Blazor  = 3.0.0-preview9.19465.2
+nuget Microsoft.AspNetCore.Blazor.Server = 3.0.0-preview9.19465.2
+nuget Microsoft.AspNetCore.Blazor.Build = 3.0.0-preview9.19465.2
+nuget Microsoft.AspNetCore.Blazor.DevServer = 3.0.0-preview9.19465.2
+nuget Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
+nuget JWT
+nuget Newtonsoft.Json
+nuget Akka.Cluster.Sharding prerelease
+nuget Dynamic.ConfigSection
+nuget Akkling prerelease
+nuget Akka.Persistence.Sqlite prerelease
+nuget Akkling.Persistence prerelease
+nuget Akkling.Cluster.Sharding prerelease
+nuget Akka.Persistence.Query.Sql prerelease
+nuget Akka.Cluster.Tools prerelease
+nuget SQLProvider
+nuget SQLitePCLRaw.core
+nuget System.Data.SQLite.Core
