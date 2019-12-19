@@ -18,7 +18,6 @@ type public SlideService(ctx: IRemoteContext) =
             downcast ctx.HttpContext.RequestServices.GetService(typeof<'T>)
 
         member private this.GetItems<'T>() =
-            fun () ->
                 let repo = this.GetService<IReadOnlyRepo<'T>>()
                 async {
                       let! b =
@@ -30,7 +29,7 @@ type public SlideService(ctx: IRemoteContext) =
         override this.Handler = {
             getSlides =
                 fun name -> async{
-                    let! categories = this.GetItems<SlideCategory>()()
+                    let! categories = this.GetItems<SlideCategory>()
                     return
                         (categories |> Seq.tryFind( fun c -> c.Name = name)).Value.Slides
                 }

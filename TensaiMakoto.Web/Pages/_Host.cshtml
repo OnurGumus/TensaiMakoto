@@ -12,6 +12,7 @@
     <base href="~/" />
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link href="_content/TensaiMakoto.Web.BlazorClient/css/site.css" rel="stylesheet" />
+    <script src="https://code.responsivevoice.org/responsivevoice.js?key=Kkoh5f5D"></script>
 </head>
 <body>
     <script>
@@ -28,25 +29,27 @@
             }
 
         };
+
+        responsiveVoice.setDefaultVoice("Japanese Female");
     </script>
     @{
     @functions{
-    public bool IsInstructorTrial { get; set;}
-    public bool IsInstructor { get; set;}
-    public string Route { get;set;}
-    private void CheckIsInstructorTrial() => IsInstructorTrial = "Makoto".Equals(RouteData.Values["id"]);
+        public bool IsInstructorTrial { get; set;}
+        public bool IsInstructor { get; set;}
+        public string Route { get;set;}
+        private void CheckIsInstructorTrial() => IsInstructorTrial = "Makoto".Equals(RouteData.Values["id"]);
 
 
-    public void OnGet()
-    {
-    CheckIsInstructorTrial();
-    }
+        public void OnGet()
+        {
+            CheckIsInstructorTrial();
+        }
 
-    public void OnPostView(string password)
-    {
-    CheckIsInstructorTrial();
+        public void OnPostView(string password)
+        {
+            CheckIsInstructorTrial();
 
-    if (IsInstructorTrial && password == "m@k0t0")
+        if (IsInstructorTrial && password == "m@k0t0")
     {
     IsInstructorTrial = false;
     IsInstructor = true;

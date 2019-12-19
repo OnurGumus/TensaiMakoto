@@ -83,15 +83,15 @@ type MainLayout = Template<"wwwroot\MainLayout.html">
 
 let view  (js: IJSRuntime) ( model : Model) dispatch =
 
-    let content =
+    let content, text =
         match model.Slides with
-        | [] -> empty
+        | [] -> empty, ""
         | _ ->
-        let text =
+        let slide =
             (model.Slides.Item (model.CurrentSlide - 1)).Data
             |> function SlideData.Text t -> t
-            |> text
-        h1[attr.style "font-size:10em"][text]
+
+        span[attr.style "font-size:10em"][text slide], slide
 
     let leftClick, rightClick =
         if model.IsInstructor then
@@ -108,6 +108,7 @@ let view  (js: IJSRuntime) ( model : Model) dispatch =
     MainLayout()
         .OnLeftClick(fun _ -> dispatch leftClick)
         .OnRightClick(fun _ -> dispatch rightClick)
+        .OnPlay(fun _ -> js.InvokeVoidAsync("responsiveVoice.speak", text) |> ignore)
         .Body(content)
         .Elt()
 
